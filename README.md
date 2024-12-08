@@ -1,5 +1,7 @@
 # E Card Game
 
+[中文版](README_cn.md) | [日本語版](README_ja.md)
+
 A card game from *Kaiji*, built with React and TypeScript, featuring a unique betting system and strategic gameplay.
 
 <div align="center">

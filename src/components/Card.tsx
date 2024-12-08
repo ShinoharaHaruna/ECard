@@ -35,8 +35,8 @@ export const Card = ({
             className={cn(
                 "w-24 h-36 rounded-lg flex flex-col items-center justify-center space-y-2 cursor-pointer transition-all",
                 revealed
-                    ? "bg-white border-2"
-                    : "bg-gray-200 border-2 border-gray-300",
+                    ? "bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700"
+                    : "bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600",
                 isPlayable
                     ? "hover:scale-105 hover:shadow-lg"
                     : "cursor-default",
@@ -48,12 +48,16 @@ export const Card = ({
             {revealed ? (
                 <>
                     {getIcon()}
-                    <span className="text-sm font-medium">
-                        {t.cardTypes[card.type]}
+                    <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                        {card.type === "Emperor"
+                            ? t.cardTypes.Emperor
+                            : card.type === "Citizen"
+                            ? t.cardTypes.Citizen
+                            : t.cardTypes.Slave}
                     </span>
                 </>
             ) : (
-                <span className="text-2xl">?</span>
+                <Lock className="w-8 h-8 text-gray-500 dark:text-gray-400" />
             )}
         </div>
     );

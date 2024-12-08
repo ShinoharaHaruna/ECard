@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Card as CardComponent } from "./Card";
 import { Button } from "@/components/ui/button";
+import { Moon, Sun } from "lucide-react";
 import {
     calculateMoneyChange,
     getComputerMove,
@@ -11,6 +12,7 @@ import {
 import { DollarSign } from "lucide-react";
 import { Language, useTranslation, formatMoney } from "@/i18n";
 import { GameState, Card as CardType } from "@/types/game";
+import { useTheme } from "@/lib/theme-context";
 
 const DEBUG_MODE = import.meta.env.VITE_DEBUG_MODE === "true";
 
@@ -20,6 +22,7 @@ export const GameBoard = () => {
     const [language, setLanguage] = useState<Language>("zh");
     const [betError, setBetError] = useState<string | null>(null);
     const t = useTranslation(language);
+    const { theme, toggleTheme } = useTheme();
 
     const handleBet = useCallback(() => {
         const inputBet = parseInt(betInput) || 0;
@@ -171,7 +174,7 @@ export const GameBoard = () => {
     }, []);
 
     return (
-        <div className="container mx-auto p-4 max-w-4xl">
+        <div className="game-board p-4 space-y-4 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900">
             <div className="mb-4 flex justify-end space-x-2">
                 <Button
                     variant={language === "zh" ? "default" : "outline"}
@@ -193,9 +196,9 @@ export const GameBoard = () => {
                 </Button>
             </div>
 
-            <div className="space-y-8 bg-white p-6 rounded-lg shadow-lg">
+            <div className="space-y-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 text-gray-800 dark:text-gray-200">
                         <h2 className="text-xl font-semibold">
                             {t.gameStatus.gameTitle}
                         </h2>
@@ -207,7 +210,7 @@ export const GameBoard = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                         <div className="flex items-center">
-                            <DollarSign className="w-5 h-5 text-green-500" />
+                            <DollarSign className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                             <span className="ml-1 font-bold">
                                 {formatMoney(gameState.playerMoney, language)}
                             </span>
@@ -217,6 +220,18 @@ export const GameBoard = () => {
                                 {t.gameStatus.chips}: {gameState.playerChips}
                             </span>
                         </div>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={toggleTheme}
+                            className="rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+                        >
+                            {theme === "light" ? (
+                                <Moon className="w-5 h-5" />
+                            ) : (
+                                <Sun className="w-5 h-5" />
+                            )}
+                        </Button>
                     </div>
                 </div>
 
@@ -234,9 +249,15 @@ export const GameBoard = () => {
                                 onChange={(e) =>
                                     handleBetInputChange(e.target.value)
                                 }
-                                className="w-20 px-2 py-1 border rounded text-center"
+                                className="w-20 px-2 py-1 border rounded text-center 
+                                    text-gray-900 dark:text-gray-100 
+                                    bg-white dark:bg-gray-700 
+                                    border-gray-300 dark:border-gray-600 
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                             />
-                            <span>{t.gameStatus.chipsRange}</span>
+                            <span className="text-gray-800 dark:text-gray-200">
+                                {t.gameStatus.chipsRange}
+                            </span>
                         </div>
                         <Button onClick={handleBet}>
                             {t.gameStatus.betButton}

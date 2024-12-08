@@ -8,13 +8,18 @@
     font-weight: 400;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    color: #333333;
+    background-color: #ffffff;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+:root.dark {
+    color: #e0e0e0;
+    background-color: #242424;
 }
 
 a {
@@ -31,7 +36,10 @@ body {
     display: flex;
     place-items: center;
     min-width: 320px;
+    @apply text-gray-900 dark:text-gray-100;
+    @apply bg-white dark:bg-gray-900;
     min-height: 100vh;
+    transition: color 0.3s, background-color 0.3s;
 }
 
 h1 {

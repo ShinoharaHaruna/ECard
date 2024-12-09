@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { Card as CardComponent } from "./Card";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 import {
     calculateMoneyChange,
     getComputerMove,
@@ -9,7 +10,6 @@ import {
     createDeck,
     distributeCards,
 } from "@/lib/gameLogic";
-import { DollarSign } from "lucide-react";
 import { Language, useTranslation, formatMoney } from "@/i18n";
 import { GameState, Card as CardType } from "@/types/game";
 import { useTheme } from "@/lib/theme-context";
@@ -177,6 +177,29 @@ export const GameBoard = () => {
         <div className="game-board p-4 space-y-4 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900">
             <div className="mb-4 flex justify-end space-x-2">
                 <Button
+                    variant="outline"
+                    onClick={toggleTheme}
+                    className="rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+                >
+                    {theme === "light" ? (
+                        <Moon className="w-5 h-5" />
+                    ) : (
+                        <Sun className="w-5 h-5" />
+                    )}
+                </Button>
+                <Button
+                    variant="outline"
+                    onClick={() =>
+                        window.open(
+                            "https://github.com/ShinoharaHaruna/ECard",
+                            "_blank"
+                        )
+                    }
+                    className="rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+                >
+                    <SiGithub className="w-5 h-5" />
+                </Button>
+                <Button
                     variant={language === "zh" ? "default" : "outline"}
                     onClick={() => setLanguage("zh")}
                 >
@@ -210,7 +233,6 @@ export const GameBoard = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                         <div className="flex items-center">
-                            <DollarSign className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                             <span className="ml-1 font-bold">
                                 {formatMoney(gameState.playerMoney, language)}
                             </span>
@@ -220,18 +242,6 @@ export const GameBoard = () => {
                                 {t.gameStatus.chips}: {gameState.playerChips}
                             </span>
                         </div>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={toggleTheme}
-                            className="rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
-                        >
-                            {theme === "light" ? (
-                                <Moon className="w-5 h-5" />
-                            ) : (
-                                <Sun className="w-5 h-5" />
-                            )}
-                        </Button>
                     </div>
                 </div>
 
